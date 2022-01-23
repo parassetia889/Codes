@@ -8,7 +8,7 @@ class Solution {
             if(nums[i] > 0 )
             {
                 temp[j] = nums[i];
-                j = j+2;
+                j += 2;
             }
             else
             {
