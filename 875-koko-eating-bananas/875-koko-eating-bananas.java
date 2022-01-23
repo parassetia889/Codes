@@ -7,7 +7,8 @@ class Solution {
             int mid = low + (high-low)/2;
             int totalHours = 0;
             for(int p:piles)
-               totalHours += (p+mid-1)/mid; 
+               totalHours += Math.ceil((double)p/mid);
+               
             
         if(totalHours > h)
             low = mid+1;
