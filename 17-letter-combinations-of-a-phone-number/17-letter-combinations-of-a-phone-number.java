@@ -1,36 +1,37 @@
 class Solution {
-    
-    public void solve(String digits, int index, List<String> ans,String output, String[] mapping){
-        if(index >= digits.length())
-          {  ans.add(output);
-            return; }
-        
-            int number = digits.charAt(index) - '0';
-            String value = mapping[number];
-        
-            for(int i=0; i<value.length(); i++)
-            {
-                output += (value.charAt(i));
-                solve(digits, index+1, ans, output, mapping);
-                output = output.substring(0, output.length() - 1);  
-               
-                
-            }
-        
-    }
     public List<String> letterCombinations(String digits) {
         
-        List<String> ans = new ArrayList<String>();
-        
-        if(digits.length() == 0)
+        if(digits.length() == 0){
+            List<String> ans = new ArrayList<>();
             return ans;
+        }
+        return helper(digits);
+    }
+    
+    public static String getValue(char c){
+        String[] arr = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        return arr[(c -'0')];
+    }
+    
+    public static List<String> helper(String digits){
+        //base Case
+        if(digits.length() == 0){
+            List<String> ans = new ArrayList<>();
+            ans.add("");
+            return ans;
+        }
+        String  firstDigitValue = getValue(digits.charAt(0));
         
-        String output = "";
-        int index = 0;
+        List<String> smallAnswer = helper(digits.substring(1));
         
-        String mapping[] = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-        solve(digits, index, ans, output, mapping);
+        List<String> ans = new ArrayList<>();
         
+        for(int i = 0; i<firstDigitValue.length(); i++){
+            for(int j = 0; j<smallAnswer.size(); j++)
+             {   String combination = firstDigitValue.charAt(i) + smallAnswer.get(j);
+            
+            ans.add(combination);}
+        }
         return ans;
     }
 }
