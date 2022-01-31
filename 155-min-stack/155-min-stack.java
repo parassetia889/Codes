@@ -1,28 +1,43 @@
 class MinStack {
+
+    class Node{
+        int data;
+        int min; 
+        Node next;
+        
+        Node(int data, int min){
+            this.data = data;
+            this.min = min;
+            this.next = null;
+        }
+    }
     
-    Stack<int[]> stack;
-    
+    Node top;
     public MinStack() {
-        stack = new Stack<>();
+        top = null;
     }
     
     public void push(int val) {
-        if(stack.empty())
-            stack.push(new int[]{val,val});
-        else
-            stack.push(new int[]{val, Math.min(val, stack.peek()[1])});
+        if(top == null)
+            top = new Node(val, val);
+        else{
+            Node node = new Node(val, Math.min(val, top.min));
+            node.next = top;
+            top = node;
+        }
+            
     }
     
     public void pop() {
-        stack.pop();
+        top = top.next;
     }
     
     public int top() {
-        return stack.peek()[0];
+        return top.data;
     }
     
     public int getMin() {
-        return stack.peek()[1];
+        return top.min;
     }
 }
 
