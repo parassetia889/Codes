@@ -77,107 +77,56 @@ class Node {
 */
 
 class Solution{
-    //Function to add two numbers represented by linked list.
     
-    static Node reverse(Node head)
-    {
-        Node prevNode=null,curr=head,nextNode=null;
-        if(head==null)
-        return null;
+    static Node reverse(Node head){
+        Node next = null;
+        Node prev = null;
+        Node curr = head;
         
-        else if(head.next==null)
-            return head;
-            
-        else
-        {
-            while(curr!=null)
-            {
-                    nextNode=curr.next;
-                    curr.next=prevNode;
-                    prevNode=curr;
-                    curr=nextNode;
-                
-                
-            }
-            head=prevNode;
-            return head;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
-            
-        
+        return prev;
     }
-    
-    static Node addTwoLists(Node first, Node second)
-    {
-        Node temp1=first,temp2=second;
-        temp1=reverse(temp1);
-        temp2=reverse(temp2);
-        int carry=0;
-        Node t=null;
+    //Function to add two numbers represented by linked list.
+    static Node addTwoLists(Node first, Node second){
         
-        while(temp1!=null && temp2!=null)
-        {
-            Node nextN=new Node(-1);
-            nextN.next=t;
-            nextN.data=(carry+temp1.data + temp2.data)%10; //getting the units digit
-            //calculating carry for the next iteration
-            if(temp1.data+ temp2.data + carry >=10)
-                carry=1;
-            else
-                carry=0;
-               
-             t=nextN; 
-            
-            
-            temp1=temp1.next;
-            temp2=temp2.next;
-            
-            
-        }
+        first = reverse(first);
+        second = reverse(second);
         
-        while(temp1!=null)//if length of num1 is greater
-        {
-            Node nextN=new Node(-1);
-            nextN.next=t;
+        
+        Node dummy = new Node(0);
+        Node l1 = first, l2 = second, curr = dummy;
+        
+        int carry = 0;
+        
+        while(l1 != null || l2 != null){
             
-            nextN.data=(carry+temp1.data)%10;
-            if(carry+temp1.data >=10)
-                carry=1;
-              
-            else 
-                carry=0;
+            int val1 = (l1 != null) ? l1.data : 0;
+            int val2 = (l2 != null) ? l2.data : 0;
+            
+            int sum = val1 + val2 + carry;
+            carry = sum/10;
+            sum = sum%10;
+            
+            curr.next = new Node(sum);
+            curr = curr.next;
+            
+            if(l1 != null)
+                l1 = l1.next;
                 
-            t=nextN;
-            temp1=temp1.next;
-            
+            if(l2 != null)
+                l2 = l2.next;
         }
         
-        while(temp2!=null)//if length of num2 is greater
-        {
-            Node nextN=new Node(-1);
-             nextN.next=t;
-            
-            nextN.data=(carry+temp2.data)%10;
-            if(carry+temp2.data >=10)
-                carry=1;
-            
-            else
-                carry=0;
-                
-            t=nextN;
-            temp2=temp2.next;
-            
-        }
-        //if the addition of the last pair of digits is >10,i.e number of digits in answer is increased by 1.
-        //eg)99+11 = 110 
-        if(carry==1) 
-        {
-            Node n=new Node(1);
-            n.next=t;
-            t=n;
-        }
+        if(carry != 0)
+        curr.next = new Node(carry);
         
-        return t;
+        Node ans = reverse(dummy.next);
         
-        
+        return ans;
     }
 }
