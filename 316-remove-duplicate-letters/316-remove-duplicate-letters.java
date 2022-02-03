@@ -1,18 +1,18 @@
 class Solution {
     public String removeDuplicateLetters(String s) {
-        char arr[]=s.toCharArray();
+       
+        char arr[] = s.toCharArray();
+        int[] freq = new int[26];
+        boolean[] flag = new boolean[26];
         
-        int freq[]=new int[26];
-        boolean flag[]=new boolean[26];
-        
-		//counting frequency of chars in arr
-        for(int i=0;i<arr.length;i++){
+        //counting the freq of all the chars in arr
+         for(int i=0;i<arr.length;i++){
             freq[arr[i]-'a']++;
         }
         
-        Stack<Character> stk=new Stack<Character>();
+        Stack<Character> stk = new Stack<>();
         
-        for(int i=0;i<arr.length;i++){
+  for(int i=0;i<arr.length;i++){
             freq[arr[i]-'a']--;    //decreasing frequency of ith char
 			
 			//if ith char is not in stack already then we check if we should add it or not
@@ -28,13 +28,16 @@ class Solution {
                 flag[arr[i]-'a']=true;
             }
 			
-		
+        
+        
+        
+        
     }
-        //finally building string 
-        StringBuilder sb=new StringBuilder();
-        while(!stk.isEmpty()){
-            sb.insert(0,stk.pop());
-        }
+        //building back the string
+        StringBuilder sb = new StringBuilder();
+        while(!stk.empty())
+            sb.insert(0, stk.pop());
+        
         return sb.toString();
-}
+    }
 }
