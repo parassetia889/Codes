@@ -1,39 +1,25 @@
 class Solution {
-        public int[] maxSlidingWindow(int[] nums, int k) {
-
-        Deque<Integer> deque = new LinkedList<>();
-
-        ArrayList<Integer> result = new ArrayList<>();
-        int currIndex = 0;
+    public int[] maxSlidingWindow(int[] nums, int k) {
         
-        for(currIndex = 0; currIndex < k; currIndex++) {
-            while (!deque.isEmpty() && nums[currIndex] >= nums[deque.peekLast()]) {
+        int[] ans = new int[nums.length - k + 1];
+        Deque<Integer> deque = new LinkedList<Integer>();
+        int p = 0;
+        
+        for(int i = 0; i < nums.length; i++){
+            if( i >= k){
+                if(!deque.isEmpty() && deque.peekFirst() <= i-k)
+                    deque.removeFirst();
+            }
+            
+            while(!deque.isEmpty() && nums[deque.peekLast()] <= nums[i])
                 deque.removeLast();
-            }
-
-            deque.addLast(currIndex);
+            
+            deque.addLast(i);
+            
+            if(i >= k-1)
+                ans[p++] = nums[deque.peekFirst()];
         }
-            for (; currIndex < nums.length; currIndex++){
-                result.add(nums[deque.peek()]);
-
-            //remove the elements which are outside of window
-            if(!deque.isEmpty() && deque.peek() <= currIndex-k) {
-                deque.removeFirst();
-            }
-
-            while (!deque.isEmpty() && nums[currIndex] >= nums[deque.peekLast()]) {
-                deque.removeLast();
-            }
-
-            deque.addLast(currIndex);
-
-        }
-        result.add(nums[deque.peek()]);
-            deque.clear();
-            int [] resultant = new int[result.size()];
-            for (int i = 0; i< result.size(); i++)
-                resultant[i] = result.get(i);
-
-            return resultant;
+        
+        return ans;
     }
 }
