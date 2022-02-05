@@ -13,22 +13,43 @@
  *     }
  * }
  */
+class Pair{
+    TreeNode node;
+    int visitingCount;
+    
+    public Pair(TreeNode node){
+        this.node = node;
+        this.visitingCount = 0;
+    }
+  
+}
 class Solution {
-   public List<Integer> postorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>();      // a LinkedList to return the output
-        Stack<TreeNode> stack = new Stack<>();              // a Stack to store nodes while traversing
-        if (root != null) {
-            stack.add(root);                    // add the root node to the stack
-        }
-        while (!stack.isEmpty()) {              // iterate the while loop until the stack is empty
-            TreeNode node = stack.pop();        // pop the top node from the stack
-            list.addFirst(node.val);            // add current node value to the list
-            if (node.left != null) {
-                stack.add(node.left);           // push left child to stack if it is not null
+       public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();      // a LinkedList to return the output
+
+        if(root == null)
+            return list;
+
+        Stack<Pair> stack = new Stack<>();              // a Stack to store nodes while traversing
+        stack.push(new Pair(root));
+
+        while( !stack.empty()){
+            Pair currPair = stack.peek();
+            currPair.visitingCount++;
+
+            if(currPair.node == null)
+                stack.pop();
+           else if(currPair.visitingCount == 1) {
+                Pair leftPair = new Pair(currPair.node.left);
+                stack.push(leftPair);
             }
-            if (node.right != null) {
-                stack.add(node.right);          // push right child to stack if it is not null
+            else if(currPair.visitingCount == 2) {
+                Pair rightPair = new Pair(currPair.node.right);
+                stack.push(rightPair);
             }
+            else //(currPair.visitingCount == 3)
+                list.add(stack.pop().node.val);
+
         }
         return list;
     }
