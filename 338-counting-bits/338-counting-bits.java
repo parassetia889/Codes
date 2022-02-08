@@ -3,15 +3,10 @@ class Solution {
         
         int[] arr = new int[n+1];
         
-        for(int j =  0; j<=n; j++){
-            int count = 0;
-            int i = j;
-            while( i != 0){
-                i = i & (i-1);
-                count++;
-            }
-            arr[j] = count;
-        }
+        for(int i = 1 ;i<=n; i++)
+            arr[i]  = arr[i & (i-1)] + 1;
+    
+        
         return arr;
     }
 }
