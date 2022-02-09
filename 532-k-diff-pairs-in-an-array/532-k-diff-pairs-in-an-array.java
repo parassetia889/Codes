@@ -1,16 +1,16 @@
-import java.util.*;
 class Solution {
     public int findPairs(int[] nums, int k) {
         
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num : nums)
+            map.put(num, map.getOrDefault(num,0)+1);
         
-        HashSet<Integer> set  = new HashSet<>();
-        Arrays.sort(nums);
-        
-        for(int i = 0; i < nums.length; i++){
-            if(Arrays.binarySearch(nums, i+1, nums.length, nums[i]+k) > 0)
-                set.add(nums[i]);
+        int count = 0;
+        for(int i : map.keySet()){
+            if(k > 0 && map.containsKey(i+k) || k == 0 && map.get(i) > 1)
+                count++;
         }
         
-        return set.size();
+        return count;
     }
 }
