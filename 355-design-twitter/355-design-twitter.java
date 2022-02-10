@@ -1,74 +1,147 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
-class Twitter {
-    class Node{
-        int userId;
-        int tweetId;
-        Node next;
-        
-        Node(){}
-        
-        Node(int userId, int tweetId){
-            this.userId = userId;
+
+public class Twitter {
+
+    static int timestamp = 0;
+    public Map<Integer, User> userMap;
+
+    class TweetNode {
+        public int tweetId;
+        public int time;
+        public TweetNode next;
+
+        public TweetNode(int tweetId) {
             this.tweetId = tweetId;
-        }
-        
-        Node(int userId, int tweetId, Node next){
-            this.userId = userId;
-            this.tweetId = tweetId;
-            this.next = next;
+            time = timestamp;
+            timestamp++;
+            next = null;
         }
     }
-    
-    HashMap<Integer, HashSet<Integer>> connections;
-    
-    Node head;
-    
-    /** Initialize your data structure here. */
+
+    class User {
+
+        public int userId;
+        public Set<Integer> followed;
+        public TweetNode tweetHead;
+
+        public User(int userId) {
+            this.userId = userId;
+            this.followed = new HashSet<>();
+            followed.add(userId);
+            this.tweetHead = null;
+        }
+
+        public void post(int tweetId) {
+            TweetNode tweetNode = new TweetNode(tweetId);
+            tweetNode.next = tweetHead;
+            tweetHead = tweetNode;
+        }
+
+        public void follow(int followeeId) {
+            followed.add(followeeId);
+        }
+
+        public void unfollow(int followeeId) {
+            followed.remove(followeeId);
+        }
+
+    }
+
     public Twitter() {
-        connections = new HashMap<>();
-        head = new Node(0,0);
+        userMap = new HashMap<>();
     }
-    
-    /** Compose a new tweet. */
+
     public void postTweet(int userId, int tweetId) {
-        insert(new Node(userId, tweetId));
+
+        //if user not present, create a new user
+        if(!userMap.containsKey(userId)) {
+            User  user = new User(userId);
+            userMap.put(userId, user);
+         }
+
+        //if user already present
+        User user = userMap.get(userId);
+        user.post(tweetId);
     }
-    
-    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+
     public List<Integer> getNewsFeed(int userId) {
-        connections.putIfAbsent(userId, new HashSet<>());
-        
-        List<Integer> l = new ArrayList<>();
-        
-        Node curr = head.next;
-        
-        while(curr != null && l.size() < 10){
-            if(connections.get(userId).contains(curr.userId) || userId == curr.userId)
-                l.add(curr.tweetId);
-            
-            curr = curr.next;
+
+        List<Integer> result = new LinkedList<>();
+
+        //if user not present, return empty list
+        if(!userMap.containsKey(userId)) {
+            return result;
         }
-        
-        return l;
+
+        //if present fetch the user
+        User user = userMap.get(userId);
+        Set<Integer> followedUsers = user.followed;
+
+        //to get recent tweets
+        PriorityQueue<TweetNode> maxHeap = new PriorityQueue<>(followedUsers.size(), (tweet1, tweet2) -> (tweet2.time - tweet1.time));
+
+        for(int id : followedUsers) {
+
+            //getting users7
+            User u = userMap.get(id);
+            TweetNode head = u.tweetHead;
+
+            if(head != null) {
+                maxHeap.add(head);
+            }
+        }
+
+        int count = 0;
+        //mergng k sorted linked list
+        while (!maxHeap.isEmpty() && count < 10) {
+            TweetNode tweetNode = maxHeap.poll();
+            result.add(tweetNode.tweetId);
+            count++;
+            if(tweetNode.next != null) {
+                maxHeap.add(tweetNode.next);
+            }
+        }
+        return result;
     }
-    
-    /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+
     public void follow(int followerId, int followeeId) {
-        connections.putIfAbsent(followerId, new HashSet<>());
-        
-        connections.get(followerId).add(followeeId);
+
+        //follower doesn't exist
+        if(!userMap.containsKey(followerId)) {
+            User  user = new User(followerId);
+            userMap.put(followerId, user);
+        }
+
+        if(!userMap.containsKey(followeeId)) {
+            User  user = new User(followeeId);
+            userMap.put(followeeId, user);
+        }
+
+        User user = userMap.get(followerId);
+        user.follow(followeeId);
+
     }
-    
-    /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+
     public void unfollow(int followerId, int followeeId) {
-        connections.putIfAbsent(followerId, new HashSet<>());
-        
-        if(connections.get(followerId).contains(followeeId))
-            connections.get(followerId).remove(followeeId);
+        if(!userMap.containsKey(followerId)) {
+            User  user = new User(followerId);
+            userMap.put(followerId, user);
+        }
+
+        if(!userMap.containsKey(followeeId)) {
+            User  user = new User(followeeId);
+            userMap.put(followeeId, user);
+        }
+        User user = userMap.get(followerId);
+        user.unfollow(followeeId);
     }
+
     
-    public void insert(Node node){
-        node.next = head.next;
-        head.next = node;
-    }
 }
