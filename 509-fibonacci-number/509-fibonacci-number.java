@@ -1,16 +1,29 @@
+//memoization
+
 class Solution {
+    
+    HashMap<Integer, Integer> map = new HashMap<>();
     public int fib(int n) {
-        
-        int[] arr = new int[n+1];
-        if(n <=1)
+        if(n <= 1)
             return n;
         
-        arr[0] = 0;
-        arr[1] = 1;
+        topDown(n);
         
-        for(int i = 2; i<=n; i++)
-            arr[i] = arr[i-1] + arr[i-2];
+        return map.get(n);
+    }
+    
+    public int topDown(int n){
+        if( n <= 1 ){
+            map.put(n,n);
+            return  n;
+        }
         
-        return arr[n];
+        if( !map.containsKey(n)){
+
+             int ans = topDown(n-1) + topDown(n-2);
+             map.put(n, ans);
+            return ans;
+        }
+        return map.get(n);
     }
 }
