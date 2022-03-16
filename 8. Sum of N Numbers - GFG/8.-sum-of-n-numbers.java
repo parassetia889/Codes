@@ -12,11 +12,7 @@ class Main {
 public static int nSum(int n){
     int ans = 0;
 
-    int i = 1;
-    while(i <= n){
-        ans += i;
-        i++;
-    }
+    ans = n*(n+1)/2;
     
     
     
