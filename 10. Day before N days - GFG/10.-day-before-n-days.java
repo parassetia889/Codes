@@ -10,12 +10,12 @@ class Main {
 //User function Template for Java
 
 public static void utility(int d, int n){
-      int t = n%7;
-   if((d-t)<0){
-       System.out.print((d-t)+7);
-   }else{
-       System.out.print(d-t);
-   }
+    int t = n%7;
+     if((d-t)<0){
+       System.out.print((d-t)+7);}
+    else{
+        System.out.print(d-t);}
+    
     
     
     
