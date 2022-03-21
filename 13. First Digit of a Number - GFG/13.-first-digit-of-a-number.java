@@ -24,7 +24,7 @@ class GFG{
 // Complete the function
 public static int firstDigit(int n){
     
-     while (n>9) {
+     while (n>=10) {
         n = n/10;
     }
     return n;
