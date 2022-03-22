@@ -12,16 +12,19 @@ class GFG{
 // It should return true is the given
 // string is palindrome otherwise false
 public static boolean isPalin(String s){
-    StringBuilder sb = new StringBuilder(s);
-    StringBuilder newSb = new StringBuilder(s);
     
-    newSb.reverse();
+    int i = 0;
+    int j = s.length()-1;
+    s = s.toUpperCase();
     
-    String s1 = new String(sb);
-    String s2 = new String(newSb);
+    while(i <= j){
+        if(s.charAt(i) != s.charAt(j) )
+            return false;
+            
+            i++; j--;
+    }
     
-    
-    return s1.equalsIgnoreCase(s2);
+    return true;
     
     
 }
