@@ -30,10 +30,6 @@ class Reverse
     // str: input string
     public static String reverseWord(String str)
     {
-        String s = "";
-        for(int i = str.length()-1; i>= 0; i--)
-          {  char c = str.charAt(i);
-            s += c;}
-            return s;
+        return new StringBuilder(str).reverse().toString();
     }
 }
