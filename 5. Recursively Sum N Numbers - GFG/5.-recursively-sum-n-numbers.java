@@ -30,15 +30,12 @@ class Solution
 {
     // Complete the function
     // N: input element
-    public static int recursiveSum(int N)
+    public static int recursiveSum(int n)
     {
-        return sumN(N,0);
-    }
-    
-    public static int sumN(int n, int sum){
-        if(n == 0)
-            return sum;
+        // recursively sum from 1 to N
+        if(n==0)
+            return 0;
             
-            return n+sumN(n-1,sum);
+        return n+recursiveSum(n-1);
     }
 }
