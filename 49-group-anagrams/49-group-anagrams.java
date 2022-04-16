@@ -1,10 +1,6 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        /*
-        
-        aet aet
-        */
-        
+    
         HashMap<String, List<String>> map = new HashMap<>();
         
         
@@ -25,12 +21,14 @@ class Solution {
                 map.put(newStr,al);
             }
             
-        }
-        List<List<String>> res = new ArrayList<>();
+   }
+         List<List<String>> res = new ArrayList<>();
         
-        for(Map.Entry<String, List<String>> s : map.entrySet()){
-            res.add(s.getValue());
-        }
+        // for(Map.Entry<String, List<String>> s : map.entrySet()){
+        //     res.add(s.getValue());
+        // }
+        
+         res.addAll(map.values());
         
         return res;
     }
