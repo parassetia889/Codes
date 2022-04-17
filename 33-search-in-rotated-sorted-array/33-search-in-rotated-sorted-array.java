@@ -1,47 +1,29 @@
 class Solution {
-    public int getPivot(int nums[]){
+    public int search(int[] nums, int target) {
         
-        int s = 0, e = nums.length - 1;
-        
-        while(s < e){
-            int mid = s + (e-s)/2;
-            
-            if(nums[mid] >= nums[0])
-                s = mid+1;
-            else 
-                e = mid;
-        }
-        
-        return s;
-    }
-    
-    public int search(int nums[],int s,int e, int key){
+        int s =0 , e  = nums.length-1;
         
         
         while(s <= e){
-            int mid = s + (e-s)/2;
             
-            if(key == nums[mid])
+            int mid = s+(e-s)/2;
+            if(nums[mid] == target)
                 return mid;
-            else if(key < nums[mid])
-                e = mid - 1;
-            else
-                s = mid + 1;
+            
+            else if(nums[s] <= nums[mid]){
+                if(target >= nums[s] && target <= nums[mid])
+                    e = mid - 1;
+                else
+                    s = mid+1; 
+            }
+            else{
+                if(target > nums[mid] && target <= nums[e])
+                    s = mid + 1;
+                else
+                    e = mid-1;
+            }
+            
         }
-        
         return -1;
-    }
-    
-    public int search(int[] nums, int target) {
-        
-        int pivot = getPivot(nums);
-        int ans = -1, n = nums.length;
-        
-        if(target >= nums[pivot]  && target <= nums[n-1] )
-            ans = search(nums, pivot, n-1, target);
-        else
-            ans = search(nums,0, pivot-1, target);
-        
-        return ans;
     }
 }
