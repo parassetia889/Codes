@@ -25,36 +25,36 @@ class GFG {
     }
 }// } Driver Code Ends
 
+
 class Solution {
-    // Function to find the number of islands.
     public int numIslands(char[][] grid) {
-        // Code here
-        int res = 0;
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
         
-        for(int i = 0; i < grid.length; i++)
-            for(int j = 0; j < grid[0].length; j++) 
-                if(grid[i][j] == '1' && visited[i][j] != true) {
-                    findIsLands(grid, i , j, visited);
-                    res++;
-                }
-                
-        return res;
+        int count = 0;
+        for(int i = 0; i<grid.length; i++){
+            for(int j = 0; j<grid[0].length; j++){
+                    if(grid[i][j] == '1'){
+                        dfs(grid, i , j);
+                        count++;
+                    }
+            }
+        }
+        return count;
     }
     
-    public void findIsLands(char[][] grid, int i, int j, boolean[][] visited) {
-        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0' || visited[i][j])
+    public void dfs(char[][] grid, int i, int j){
+        
+        if(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length|| grid[i][j] =='0')
             return;
-            
-        visited[i][j] = true;
-            
-        findIsLands(grid, i - 1, j, visited);
-        findIsLands(grid, i + 1, j, visited);
-        findIsLands(grid, i, j - 1, visited);
-        findIsLands(grid, i, j + 1, visited);
-        findIsLands(grid, i + 1, j - 1, visited);
-        findIsLands(grid, i - 1, j + 1, visited);
-        findIsLands(grid, i - 1, j - 1, visited);
-        findIsLands(grid, i + 1, j + 1, visited);
+        
+        grid[i][j] = '0';
+        dfs(grid,i,j+1); //right
+        dfs(grid,i+1, j); //down
+        dfs(grid,i,j-1);   //left
+        dfs(grid,i-1, j);   ///up
+        
+        dfs(grid,i+1,j+1); 
+        dfs(grid,i-1, j-1);
+        dfs(grid,i+1,j-1);   
+        dfs(grid,i-1, j+1);   
     }
 }
