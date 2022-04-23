@@ -5,15 +5,15 @@ class Solution {
         int n = nums.length;
         int ans = Integer.MAX_VALUE;
         
+        int left = 0, sum = 0;
+        
         for(int i = 0; i<n; i++){
-            int sum = 0;
-            for(int j = i; j < n; j++){
-                sum += nums[j];
-                
-                if(sum >= target){
-                    ans = Math.min(ans, j-i+1);
-                  
-                }
+            
+            sum += nums[i];
+            while(sum >= target){
+                ans = Math.min(ans, i-left+1);
+                sum -= nums[left];
+                left++;
             }
         }
     
