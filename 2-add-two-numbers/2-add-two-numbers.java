@@ -16,7 +16,7 @@ class Solution {
         ListNode curr = dummy;
         int carry = 0;
         
-        while( l1 != null || l2 != null){
+        while( l1 != null || l2 != null || carry == 1){
             
             int x = (l1 != null) ? l1.val : 0;
             int y = (l2 != null) ? l2.val : 0;
@@ -31,10 +31,11 @@ class Solution {
             
              if(l2 != null)
                 l2 = l2.next;
+            
+            
         }
         
-        if(carry != 0)
-            curr.next = new ListNode(carry);
+       
         
         
         return dummy.next;
