@@ -1,20 +1,23 @@
 class Solution {
     public String convertToTitle(int columnNumber) {
         
-        String s = "";
-       
         
+        String ans = "";
+        int num = columnNumber;
         
-        while(columnNumber > 0){
+        while(num > 0){
             
-               columnNumber--;
+            int rem = num%26;
             
-            s = (char)(columnNumber%26 + 65) + s;   //Y
-            
-      
-            columnNumber /= 26; //26
+            if(rem == 0){
+                ans = 'Z' + ans;
+                num = num/26 - 1;
+            }
+            else{
+                ans = (char)('A' + rem - 1) + ans;
+                num /= 26;
+            }
         }
-        
-        return s;
+        return ans;
     }
 }
