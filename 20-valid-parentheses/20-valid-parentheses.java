@@ -3,22 +3,29 @@ class Solution {
         
         Stack<Character> stack = new Stack<>();
         
-        for(int i = 0; i<s.length(); i++){
-            char ch = s.charAt(i);
-            if(ch == '(' || ch == '{' || ch == '[')
-                stack.push(ch);
-            else if(stack.empty())
-                return false;
-            else if((ch == ')' && stack.peek() == '(') ||
-                    (ch == '}' && stack.peek() == '{') ||
-                    (ch == ']' && stack.peek() == '[') )
-                stack.pop();
-            else
-                return false;
+        for(int i = 0 ; i < s.length(); i++){
             
+            if(s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{')
+                stack.push(s.charAt(i));
+            
+            else{   //closing
+                if(stack.isEmpty())
+                    return false;
+                else{
+                    char c = stack.pop();
+                    if(s.charAt(i) == ')' && c != '(')
+                        return false;
+                    else if(s.charAt(i) == ']' && c != '[')
+                        return false;
+                    else if(s.charAt(i) == '}' && c != '{')
+                        return false;
+                  
+                    
+                }
+                    
+            }
         }
         
-        return stack.empty();
-           
+        return stack.isEmpty();
     }
 }
