@@ -1,25 +1,57 @@
-class NestedIterator implements Iterator<Integer> {
-    private final List<Integer> flat;
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * public interface NestedInteger {
+ *
+ *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     public boolean isInteger();
+ *
+ *     // @return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // Return null if this NestedInteger holds a nested list
+ *     public Integer getInteger();
+ *
+ *     // @return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // Return empty list if this NestedInteger holds a single integer
+ *     public List<NestedInteger> getList();
+ * }
+ */
+public class NestedIterator implements Iterator<Integer> {
 
+    List<Integer> list = new ArrayList<>();
+    int index = 0;
     public NestedIterator(List<NestedInteger> nestedList) {
-        this.flat = new ArrayList<>();
-        flatten(nestedList);
-    }
-
-    private void flatten(List<NestedInteger> lst) { //In-order DFS traversal
-        for (NestedInteger i : lst) {
-            if (i.isInteger()) flat.add(i.getInteger());
-            else flatten(i.getList());
+        
+        for(int i = 0; i < nestedList.size(); i++){
+            if(nestedList.get(i).isInteger())
+                list.add(nestedList.get(i).getInteger());
+            else
+                search(nestedList.get(i));
         }
     }
 
     @Override
     public Integer next() {
-        return flat.remove(0);
+        return list.get(index++);
     }
 
     @Override
     public boolean hasNext() {
-        return flat.size() > 0;
+        return index < list.size();
+    }
+    
+    public void search(NestedInteger data){
+        if(data.isInteger())
+            list.add(data.getInteger());
+        else{
+            for(int i =0; i <data.getList().size();i++){
+                search(data.getList().get(i));
+        }
     }
 }
+}
+
+/**
+ * Your NestedIterator object will be instantiated and called as such:
+ * NestedIterator i = new NestedIterator(nestedList);
+ * while (i.hasNext()) v[f()] = i.next();
+ */
