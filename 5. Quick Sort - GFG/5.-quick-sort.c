@@ -18,9 +18,8 @@ void printArray(int arr[], int size)
 //Function to sort an array using quick sort algorithm.
 void quickSort(int arr[], int l, int h)
 {
-    
-    if(l < h){
-        int p = partition(arr, l, h);
+    if(h > l){
+        int  p = partition(arr, l , h);
         quickSort(arr, l, p-1);
         quickSort(arr, p+1, h);
     }
@@ -28,20 +27,21 @@ void quickSort(int arr[], int l, int h)
     
 int partition (int arr[], int l, int h)
 {
-   int pivot = arr[h];
-   int i = l-1;
-   for(int j = l; j <= h-1; j++){
-       if(arr[j] < pivot){
+   int i = l - 1, p = h;
+   for(int j = l; j <h; j++){
+       if(arr[j]  < arr[p]){
            i++;
            int temp = arr[i];
            arr[i] = arr[j];
            arr[j] = temp;
        }
+       
    }
-   int temp = arr[i+1];
-   arr[i+1] = arr[h];
-   arr[h] = temp;
-   return i+1;
+    int temp = arr[i+1];
+       arr[i+1] = arr[h];
+       arr[h] = temp;
+       
+       return i+1;
 }
 
 // { Driver Code Starts.
