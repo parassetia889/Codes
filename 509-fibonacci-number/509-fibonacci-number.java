@@ -1,29 +1,20 @@
-//memoization
-
 class Solution {
-    
-    HashMap<Integer, Integer> map = new HashMap<>();
+   int dp[];
     public int fib(int n) {
+        
+            dp = new int[n+1];
+            Arrays.fill(dp,-1);
+    return fibo(n);
+    }
+    
+    public int fibo(int n){
         if(n <= 1)
             return n;
         
-        topDown(n);
+        if(dp[n] != -1)
+            return dp[n];
         
-        return map.get(n);
-    }
-    
-    public int topDown(int n){
-        if( n <= 1 ){
-            map.put(n,n);
-            return  n;
-        }
         
-        if( !map.containsKey(n)){
-
-             int ans = topDown(n-1) + topDown(n-2);
-             map.put(n, ans);
-            return ans;
-        }
-        return map.get(n);
+        return  (dp[n] = fibo(n-1) + fibo(n-2));
     }
 }
