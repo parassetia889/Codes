@@ -1,5 +1,18 @@
-
-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         
@@ -9,14 +22,14 @@ class Solution {
         if(root == null)
             return al;
         
-       
         dq.add(root);
         
-        while( !dq.isEmpty() ){   //2
+        while( !dq.isEmpty()){
             
             List<Integer> list = new ArrayList<>();
             int n = dq.size();
-            for(int i = 0; i<n; i++){
+            
+            for(int i = 0 ; i < n; i++){
                 
                 TreeNode temp = dq.remove();
                 list.add(temp.val);
@@ -28,8 +41,7 @@ class Solution {
                     dq.add(temp.right);
             }
             al.add(list);
-        } 
-        
+        }
         return al;
     }
 }
