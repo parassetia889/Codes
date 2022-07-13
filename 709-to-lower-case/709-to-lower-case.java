@@ -3,8 +3,14 @@ class Solution {
         
         String str = "";
         
-        for(char ch : s.toCharArray())
-            str += Character.toLowerCase(ch);
+        for(char ch : s.toCharArray()){
+            
+            if(Character.isUpperCase(ch))
+                str += (char)(ch+32);
+            else
+                str += ch;
+        }
+           
         
         return str;
     }
