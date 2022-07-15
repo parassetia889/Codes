@@ -4,16 +4,15 @@ class Solution {
         if(s.length() != t.length())
             return false;
         
-        int[] count = new int[52];
+        int arr[] = new int[26];
         
-        for(char c : s.toCharArray())
-            ++count[c - 'a'];
+        for(char ch : s.toCharArray())
+            arr[ch - 'a']++;
         
-        for(char c : t.toCharArray()){
-            if(--count[c - 'a'] < 0)
+        for(char ch : t.toCharArray()){
+            if(--arr[ch - 'a'] < 0)
                 return false;
         }
-        
         return true;
     }
 }
