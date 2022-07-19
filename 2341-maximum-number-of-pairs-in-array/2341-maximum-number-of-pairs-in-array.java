@@ -1,21 +1,18 @@
 class Solution {
     public int[] numberOfPairs(int[] nums) {
-     
-    HashMap<Integer, Integer> map = new HashMap<>();
-    int[] answer = new int[2];
         
-        for(int num : nums)
-            map.put(num, map.getOrDefault(num,0)+1);
+        Set<Integer> set = new HashSet<>();
+        int count = 0;
         
-        for(Map.Entry<Integer, Integer> e : map.entrySet()){
+        for(int num : nums){
             
-                answer[0] += e.getValue()/2;
-            if(e.getValue()%2 != 0)
-                answer[1] +=  e.getValue()%2;
+            if(set.contains(num)){
+                set.remove(num);
+                count++;
+            }
+             else set.add(num);
         }
-        
-        return answer;
+               
+        return new int[]{count, set.size()};
     }
 }
-
- 
