@@ -4,7 +4,8 @@ class Solution {
         map = new HashMap<>();
         int count = 0;
         for(String w:words){
-            if(isSubSequence(s,w)) count++;
+            if(isSubSequence(s,w)) 
+                count++;
         }
         return count;
         
@@ -19,13 +20,12 @@ class Solution {
         if(map.containsKey(s2)) return map.get(s2);
          
         while(p1<len1){
-            if(s1.charAt(p1)==s2.charAt(p2)){
-                p1++;
+            if(s1.charAt(p1)==s2.charAt(p2))
                 p2++;
-            }else{
+            
                 p1++;
-            }
-            if(p2==len2&&p1<=len1){
+            
+            if(p2==len2 && p1<=len1){
                 map.put(s2,true);
                 return true;
             }
