@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    private TreeNode ans = null;
+    private boolean recurseTree(TreeNode curr, TreeNode p, TreeNode q){
+        
+        if(curr == null)
+            return false;
+        
+        int left = this.recurseTree(curr.left, p ,q) ? 1 : 0;
+        int right = this.recurseTree(curr.right, p ,q) ? 1 : 0;
+        
+        int mid = (curr == p) || (curr == q) ? 1 : 0;
+        
+        if(mid + left + right >= 2)
+            this.ans = curr;
+        
+        return (mid + right + left > 0);
+    }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        this.recurseTree(root, p ,q);
+        return this.ans;
+    }
+}
