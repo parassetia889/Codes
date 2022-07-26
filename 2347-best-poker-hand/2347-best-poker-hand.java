@@ -16,9 +16,8 @@ class Solution {
             if(map.get(i) == 3)
                 return "Three of a Kind";}
         
-        if(map.size() == 5)
-            return "High Card";
-        else 
-            return "Pair";
+        
+        return map.containsValue(2) ? "Pair" : "High Card";
+  
     }
 }
