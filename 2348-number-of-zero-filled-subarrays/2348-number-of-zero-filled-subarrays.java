@@ -1,12 +1,16 @@
 class Solution {
     public long zeroFilledSubarray(int[] nums) {
         
-        long res = 0;
-        for(int i = 0 , j = 0; i < nums.length; i++){
-            if(nums[i] != 0)
-                j = i + 1;
-            res += i - j + 1;
+        long ans = 0, local = 0;
+        
+        for(int i : nums){
+            if(i == 0)
+                local++;
+            else
+                local = 0;
+            
+            ans += local;
         }
-        return res;
+        return ans;
     }
 }
