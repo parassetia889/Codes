@@ -1,0 +1,1 @@
+https://leetcode.com/problems/maximum-number-of-groups-entering-a-competition/discuss/2358236/Explanation-of-O(logn)-with-proof-and-image-JavaC%2B%2BPython
