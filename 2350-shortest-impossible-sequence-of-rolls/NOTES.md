@@ -1,0 +1,1 @@
+https://leetcode.com/problems/shortest-impossible-sequence-of-rolls/discuss/2337773/Simplest-Detailed-Explanation-Simple-Logic
