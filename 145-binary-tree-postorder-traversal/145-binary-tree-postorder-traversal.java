@@ -13,44 +13,30 @@
  *     }
  * }
  */
-class Pair{
-    TreeNode node;
-    int visitingCount;
-    
-    public Pair(TreeNode node){
-        this.node = node;
-        this.visitingCount = 0;
-    }
-  
-}
 class Solution {
-       public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();      // a LinkedList to return the output
-
+    public List<Integer> postorderTraversal(TreeNode root) {
+        
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        
         if(root == null)
-            return list;
-
-        Stack<Pair> stack = new Stack<>();              // a Stack to store nodes while traversing
-        stack.push(new Pair(root));
-
-        while( !stack.empty()){
-            Pair currPair = stack.peek();
-            currPair.visitingCount++;
-
-            if(currPair.node == null)
-                stack.pop();
-           else if(currPair.visitingCount == 1) {
-                Pair leftPair = new Pair(currPair.node.left);
-                stack.push(leftPair);
-            }
-            else if(currPair.visitingCount == 2) {
-                Pair rightPair = new Pair(currPair.node.right);
-                stack.push(rightPair);
-            }
-            else //(currPair.visitingCount == 3)
-                list.add(stack.pop().node.val);
-
+            return new ArrayList<>();
+        
+        List<Integer> list = new ArrayList<>();
+        
+        s1.push(root);
+        
+        while( !s1.isEmpty()){
+            
+            root = s1.pop();
+            s2.push(root);
+            if(root.left != null) s1.push(root.left);
+            if(root.right != null) s1.push(root.right);
         }
+        
+        while( !s2.isEmpty())
+            list.add(s2.pop().val);
+        
         return list;
     }
 }
