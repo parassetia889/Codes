@@ -23,16 +23,14 @@ class Solution {
     }
     
     public int helper(TreeNode root){
-        
         if(root == null)
             return 0;
         
-        //sum should not be -ve
-        int leftSum = Math.max(helper(root.left), 0);
-        int rightSum = Math.max(helper(root.right), 0);
+        int leftSum = Math.max(0, helper(root.left));
+        int rightSum = Math.max(0, helper(root.right));
         
-        max = Math.max(max, leftSum+rightSum + root.val);
+        max = Math.max(max, leftSum+rightSum+root.val);
         
-        return Math.max(leftSum, rightSum) + root.val;
+        return root.val+Math.max(leftSum, rightSum);
     }
 }
