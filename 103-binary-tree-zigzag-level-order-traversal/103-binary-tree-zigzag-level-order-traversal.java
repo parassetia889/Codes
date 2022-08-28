@@ -15,47 +15,36 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-       
-        List<List<Integer>> res = new ArrayList<>();
-        Deque<TreeNode> dq = new LinkedList<>();
+     
+        List<List<Integer>> list = new ArrayList<>();
+        if(root == null)
+            return list;
         
-        if(root != null)
-            dq.add(root);
-        else 
-            return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
         
-       int rightSe = 0;
-        
-        while( !dq.isEmpty()){
-            List<Integer> ans = new ArrayList<>();
-            int n = dq.size();
+        boolean leftSe = false;
+        while( !q.isEmpty()){
             
-            if(rightSe == 0){
-                for(int i = 0; i < n; i++){
-                    TreeNode node = dq.removeFirst();
-                    ans.add(node.val);
-                    if(node.left != null)
-                        dq.addLast(node.left);
-                    if(node.right != null)
-                        dq.addLast(node.right);
-                }
-            }
-            else{
-                for(int i = 0; i < n; i++){
-                    TreeNode node = dq.removeLast();
-                    ans.add(node.val);
-                    if(node.right != null)
-                        dq.addFirst(node.right);
-                    if(node.left != null)
-                        dq.addFirst(node.left);
-                }
-            }
             
-             res.add(ans);
-             rightSe = (rightSe+1)%2;
-             
+             LinkedList<Integer> res = new LinkedList<>();
+            int  n = q.size();
+            for(int i = 0; i < n; i++){
+                TreeNode node = q.poll();
+                if(node.left != null)   q.add(node.left);
+                if(node.right != null)  q.add(node.right);
+                
+                if(leftSe)
+                    res.addFirst(node.val);
+                else
+                    res.add(node.val);
+                
+                
+            }
+            list.add(res);
+            leftSe = !leftSe;
         }
         
-        return res;
+        return list;
     }
 }
