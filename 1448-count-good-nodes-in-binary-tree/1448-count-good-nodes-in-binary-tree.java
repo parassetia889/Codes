@@ -15,25 +15,28 @@
  */
 class Solution {
     
-    int good = 0;
-    int max = Integer.MIN_VALUE;
     
+    int count = 0;
+    int max = Integer.MIN_VALUE;
     public int goodNodes(TreeNode root) {
-     
-        good(root, max);
-        return good;
+        
+        if(root == null )
+            return 0;
+        helper(root, max);
+        
+        return count;
     }
     
-    public void good(TreeNode root, int max){
+    public void helper(TreeNode root, int max){
         if(root == null)
-            return;
+            return ;
         
-        if(root.val >= max)
-            good++;
+       if(root.val >= max)
+           count++;
         
         max = Math.max(max, root.val);
         
-        good(root.left, max);
-        good(root.right, max);
+        helper(root.left, max);
+        helper(root.right, max);
     }
 }
