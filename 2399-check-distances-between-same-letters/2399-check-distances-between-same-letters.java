@@ -7,12 +7,12 @@ class Solution {
         
         for(int i = 0; i < s.length(); i++){
             
-            char ch = s.charAt(i);
-            if(arr[ch-'a'] != -1){
-                if(i - arr[ch-'a']-1 != distance[ch-'a'])
-                    return false;
-            }else
-                arr[ch-'a'] = i;
+            int n = s.charAt(i) - 'a';
+            
+            if(arr[n] != -1 && distance[n] != i-arr[n])
+                return false;
+            else
+                arr[n] = i + 1;
         }
         
         return true;
